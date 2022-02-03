@@ -1,0 +1,43 @@
+<div class="conainer">
+    <div class="header" style="margin-top:10px;">
+        <div class="form-control-sm">
+        <!--search functionality-->
+            <input type="text" class="form-control" placeholder="Search here" [(ngModel)]="filter" >
+        </div>
+        <a [routerLink]="" class="btn btn-outline-dark" style="float: right; margin-top: 10px;margin-bottom: 10px;">
+        Add New Post
+        </a>   
+    </div>
+    <table class="table table-bordered table-striped" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>CreatedDate</th>
+                    <th>Description</th>
+                    <th>CategoryId</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let post of postService.posts | filter : filter | paginate: {itemsPerPage : 5, currentPage : page}">
+                    <td>{{post.PostId}}</td>
+                    <td>{{post.Title}}</td>
+                    <td>{{post.CreatedDate | date: 'dd-MM-yyyy'}}</td>
+                    <td>{{post.Description}}</td>
+                    <td>{{post.CategoryId}}</td>
+                    <td>
+                         <!--button-->
+                         <button class="btn btn-sm btn-info" (click)="UpdatePost(post.PostId)">Edit</button>
+                         &nbsp;
+                         <button class="btn btn-sm btn-outline-danger" (click)="DeletePost(post.PostId)">X</button>
+                    </td>               
+                </tr>
+            </tbody>
+    </table>
+    <div class="footer">
+<!--pagination-->
+<pagination-controls (pageChange) ="page=($event)"></pagination-controls>
+
+    </div>
+</div>
